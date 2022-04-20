@@ -12,7 +12,7 @@ function Gnb(props) {
       <style jsx>{`
         .container {
           width: 900px;
-          height: 50px;
+          height: 40px;
           padding-left: 20px;
           display: flex;
           flex-direction: row;
