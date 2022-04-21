@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -37,8 +36,8 @@ function ItemList({ list }) {
           padding: 20px;
         }
         img {
-          width: 200px;
-          height: 200px;
+          width: 150px;
+          height: 150px;
         }
         .itemName {
           font-size: 14px;

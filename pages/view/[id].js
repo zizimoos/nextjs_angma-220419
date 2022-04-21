@@ -1,45 +1,36 @@
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 import axios from "axios";
+import Head from "next/head";
 
-function Detail(props) {
-  const [list, setList] = useState({});
-  const {
-    query: { id },
-  } = useRouter();
-
-  const API_URL = `https://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
-
-  function getData() {
-    axios.get(API_URL).then((res) => {
-      setList(res.data);
-    });
-  }
-
-  useEffect(() => {
-    if (id) {
-      getData();
-    }
-  }, [id]);
-
+function Detail({ list }) {
   return (
     <div className="container">
-      <div className="contentBox">
-        <div className="imgBox">
-          <img src={list.image_link}></img>
-        </div>
-        <div className="purchaseBox">
-          <div>{list.name}</div>
-          <div>{list.product_type}</div>
-          <div className="price">$ {list.price}</div>
-          <div className="purchaseButton">구매하기</div>
-        </div>
-      </div>
-
-      <div className="description">
-        <p>Description</p>
-        {list.description}
-      </div>
+      {list && (
+        <>
+          <Head>
+            <title>{list.name}</title>
+            <meta
+              name="description"
+              content={`This is a azerc ${list.description}`}
+            />
+          </Head>
+          <div className="contentBox">
+            <div className="imgBox">
+              <img src={list.image_link}></img>
+            </div>
+            <div className="purchaseBox">
+              <div>{list.name}</div>
+              <div>{list.product_type}</div>
+              <div className="price">$ {list.price}</div>
+              <div className="purchaseButton">구매하기</div>
+            </div>
+          </div>
+          <div className="description">
+            <p>Description</p>
+            {list.description}
+          </div>
+        </>
+      )}
 
       <style jsx>{`
         .container {
@@ -103,9 +94,27 @@ function Detail(props) {
           margin-top: 20px;
           margin-bottom: 20px;
         }
+        .isLoading {
+          width: 900px;
+          margin: 50px auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       `}</style>
     </div>
   );
 }
 
 export default Detail;
+
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+  const API_URL = `https://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
+  const res = await axios.get(API_URL);
+  return {
+    props: {
+      list: res.data,
+    },
+  };
+}

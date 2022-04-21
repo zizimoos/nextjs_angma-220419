@@ -5,12 +5,15 @@ import ItemList from "./src/components/ItemList";
 
 export default function Home() {
   const [list, setList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const API_URL =
     "https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline";
 
   function getData() {
     axios.get(API_URL).then((res) => {
       setList(res.data);
+      setIsLoading(false);
     });
   }
   useEffect(() => {
@@ -21,15 +24,26 @@ export default function Home() {
     <>
       <div className="container">
         <Head>
-          <title>Create Next App</title>
+          <title>azerc's shop</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <meta name="description" content="This is a azerc project" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className="divider">베스트 상품</div>
-        <hr></hr>
-        <ItemList list={list.slice(0, 9)} />
-        <div className="divider">새로운 상품</div>
-        <hr></hr>
-        <ItemList list={list.slice(9)} />
+        {isLoading ? (
+          <div className="isLoading">...isLoading</div>
+        ) : (
+          <>
+            <hr></hr>
+            <ItemList list={list.slice(0, 9)} />
+            <div className="divider">새로운 상품</div>
+            <hr></hr>
+            <ItemList list={list.slice(9)} />
+          </>
+        )}
       </div>
       <style jsx>{`
         container {
@@ -38,6 +52,13 @@ export default function Home() {
         }
         .divider {
           margin-top: 20px;
+        }
+        .isLoading {
+          width: 900px;
+          margin: 50px auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       `}</style>
     </>
