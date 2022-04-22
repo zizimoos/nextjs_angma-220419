@@ -1,10 +1,12 @@
 import React from "react";
 import axios from "axios";
 import Head from "next/head";
+import Image from "next/image";
 
-function Detail({ list }) {
+function Detail({ list, name }) {
   return (
     <div className="container">
+      <div>{name} 환경입니다.</div>
       {list && (
         <>
           <Head>
@@ -16,7 +18,12 @@ function Detail({ list }) {
           </Head>
           <div className="contentBox">
             <div className="imgBox">
-              <img src={list.image_link}></img>
+              <Image
+                src={list.image_link}
+                alt="detail image"
+                width={300}
+                height={300}
+              ></Image>
             </div>
             <div className="purchaseBox">
               <div>{list.name}</div>
@@ -49,10 +56,11 @@ function Detail({ list }) {
         .imgBox {
           width: 300px;
           height: 300px;
+          margin-top: 20px;
           display: flex;
           justify-content: center;
           align-items: center;
-          margin-right: 40px;
+          margin-right: 80px;
         }
         img {
           width: 200px;
@@ -115,6 +123,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       list: res.data,
+      name: process.env.name,
     },
   };
 }

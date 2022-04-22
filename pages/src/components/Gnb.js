@@ -46,6 +46,7 @@ function Gnb(props) {
           color: white;
           font-size: 14px;
           background-color: black;
+          cursor: pointer;
         }
       `}</style>
     </>

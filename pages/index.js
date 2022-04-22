@@ -7,8 +7,8 @@ export default function Home() {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const API_URL =
-    "https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  // "https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline";
 
   function getData() {
     axios.get(API_URL).then((res) => {
@@ -24,7 +24,7 @@ export default function Home() {
     <>
       <div className="container">
         <Head>
-          <title>azerc's shop</title>
+          <title>{`azerc's shop`}</title>
           <meta
             name="viewport"
             content="initial-scale=1.0, width=device-width"

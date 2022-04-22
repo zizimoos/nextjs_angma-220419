@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -5,11 +6,16 @@ function ItemList({ list }) {
   return (
     <>
       <div className="container">
-        {list.map((item) => (
+        {list?.map((item) => (
           <div key={item.id} className="contentUnit">
             <Link href={`/view/${item.id}`}>
               <a>
-                <img src={item.image_link} alt="img" />
+                <Image
+                  src={item.image_link}
+                  alt="items"
+                  width={150}
+                  height={150}
+                />
               </a>
             </Link>
             <div className="itemType">{item.product_type}</div>
