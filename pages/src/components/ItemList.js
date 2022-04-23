@@ -8,14 +8,9 @@ function ItemList({ list }) {
       <div className="container">
         {list?.map((item) => (
           <div key={item.id} className="contentUnit">
-            <Link href={`/view/${item.id}`}>
+            <Link href={`/detail/${item.id}`}>
               <a>
-                <Image
-                  src={item.image_link}
-                  alt="items"
-                  width={150}
-                  height={150}
-                />
+                <Image src={item.image_link} alt="items" layout="raw" />
               </a>
             </Link>
             <div className="itemType">{item.product_type}</div>

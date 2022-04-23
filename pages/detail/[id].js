@@ -21,7 +21,6 @@ function Detail({ list, name }) {
               <Image
                 src={list.image_link}
                 alt="detail image"
-                width={300}
                 layout="raw"
               ></Image>
             </div>
@@ -116,7 +115,24 @@ function Detail({ list, name }) {
 
 export default Detail;
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths() {
+  return {
+    paths: [
+      {
+        params: { id: "740" },
+      },
+      {
+        params: { id: "730" },
+      },
+      {
+        params: { id: "729" },
+      },
+    ],
+    fallback: true,
+  };
+}
+
+export async function getStaticProps(context) {
   const id = context.params.id;
   const API_URL = `https://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
   const res = await axios.get(API_URL);
